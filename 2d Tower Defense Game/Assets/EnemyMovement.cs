@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class EnemyMovement : MonoBehaviour
 
     [Header("Attributes")]
     [SerializeField] private float moveSpeed = 2f;
+    float maxSpeed = 5f;
 
     private Transform target;
     private int pathIndex = 0;
@@ -18,7 +20,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Vector2.Distance(target.position, transform.position) <= 0.1f)
+        if (Vector2.Distance(target.position, transform.position) <= 0.2f)
         {
             pathIndex++;
 
@@ -35,7 +37,15 @@ public class EnemyMovement : MonoBehaviour
     {
         Vector2 direction = (target.position - transform.position).normalized;
 
-        rb.linearVelocity = direction * moveSpeed;
+        if (Vector2.Dot(rb.linearVelocity, direction) < maxSpeed)
+        {
+            rb.AddForce(direction * moveSpeed);
+        }
+
+        if (rb.linearVelocity.magnitude > maxSpeed)
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+        }
     }
 }
 
