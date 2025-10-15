@@ -225,7 +225,7 @@ MonoBehaviour:
   turrentRotationPoint: {fileID: 0}
   enemyMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   targetingRange: 5
   rotationSpeed: 200
 --- !u!1 &565531720
